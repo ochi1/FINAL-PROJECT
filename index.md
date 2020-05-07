@@ -296,7 +296,7 @@ Grad students
 
     ggplot(data = topten, aes(x = Major, y = all_median)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
 PLOTTING —————-
 ===============
@@ -330,14 +330,14 @@ PLOTTING —————-
     #1
     ggplot(data = categories, aes(x = fct_reorder(Major_category, Count, .desc = TRUE), y = Count)) + geom_bar(stat = "identity", fill = "blue") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Major Categories", x = "Major Category")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
     #2
     ggplot(data = categories, aes(x = fct_reorder(Major_category, Total, .desc = TRUE), y = Total)) + geom_bar(stat = "identity", fill = "blue") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Total Cases", y = "Cases", x = "Major Category")
 
     ## Warning: Removed 1 rows containing missing values (position_stack).
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-7-2.png) \# 1. In
+![](index_files/figure-markdown_strict/unnamed-chunk-7-2.png) \# 1. In
 our dataset, each unique major is classified as one of these 16
 categories. Engineering is the most diverse category followed by;
 Education, Liberal Arts, Life Science, and Business.
@@ -351,12 +351,12 @@ Education, Liberal Arts, Life Science, and Business.
     #3
     ggplot(data = mostpopular, aes(x = fct_reorder(Major, full_total, .desc = TRUE), y = full_total)) + geom_bar(stat = "identity", fill = "green") + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + labs(title = "Popular Majors", x = "Majors", y = "Count")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-8-1.png)
 
     #4
     ggplot(data = mostpopularcount, aes(x = fct_reorder(Major_category, Count, .desc = TRUE), y = Count)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Popular Major Categories", x = "Major Category")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-8-2.png) \#These
+![](index_files/figure-markdown_strict/unnamed-chunk-8-2.png) \#These
 are the 25 most popular majors in our dataset. Business Management and
 Administration is the most popular with Business being the most popular
 category amongst the top 25 majors.
@@ -365,7 +365,7 @@ category amongst the top 25 majors.
     ggplot(data = totalcombination2, aes(x = fct_reorder(Major, full_median, .desc = TRUE), y = full_median, color = Major_category)) + geom_point() + labs(main = "Median Income by Major", y = "Median Income", x = "Majors", color = "Major Category") + theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank())
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-9-1.png) \# 4 This
+![](index_files/figure-markdown_strict/unnamed-chunk-9-1.png) \# 4 This
 is the median income for all 173 majors we have in our data set. As you
 can see, the majors in the categories of Education, Engineering, and
 Health are the highest earners.
@@ -373,19 +373,19 @@ Health are the highest earners.
     #6
     ggplot(data = categories, aes(x = fct_reorder(Major_category, mean_income, .desc = TRUE), y = mean_income)) + geom_bar(stat = "identity", fill = "blue") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Income per Major", x = "Major", y = "Median Income")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-10-1.png) \# These
+![](index_files/figure-markdown_strict/unnamed-chunk-10-1.png) \# These
 are the average median income for each major category in our dataset. As
 you can see engineering is paid the best.
 
     #7
     ggplot(data = mostpopular, aes(x = fct_reorder(Major, full_median, .desc = TRUE), y = full_median)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Income per Major", x = "Major", y = "Median Income")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-11-1.png)
 
     #8
     ggplot(data = mostpopular, aes(x = fct_reorder(Major_category, full_median, .desc = TRUE), y = full_median)) + geom_boxplot(fill = "yellow") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Income for Popular Major Categories", x = "Major Category", y = "Median Income")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-11-2.png) \# 5
+![](index_files/figure-markdown_strict/unnamed-chunk-11-2.png) \# 5
 majors we want to investigate - General Engineering - Economics -
 Political Science and Government - Mathematics - Biology
 
@@ -397,17 +397,17 @@ Political Science and Government - Mathematics - Biology
     ggplot(data = totalcombination3, aes(x = fct_reorder(Major, full_unemployment_rate, .desc = TRUE), y = full_unemployment_rate, color = Major_category)) + geom_point() + labs(main = "Unemployment Rate by Major", y = "Unemployment Rate", x = "Majors", color = "Major Category") + theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank())
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-13-1.png)
 
     #10
     ggplot(data = categories, aes(x = fct_reorder(Major_category, mean_unemployment, .desc = TRUE), y = mean_unemployment)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Unemployment by Major Category", x = "Major Category", y = "Unemployment Rate")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-13-2.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-13-2.png)
 
     #11
     ggplot(data = mostpopular, aes(x = fct_reorder(Major, full_unemployment_rate, .desc = TRUE), y = full_unemployment_rate)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Unemployment by Major Category", x = "Major Category", y = "Unemployment Rate")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-13-3.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-13-3.png)
 
 Women
 =====
@@ -418,19 +418,19 @@ Women
 
     ## Warning: Removed 1 rows containing missing values (geom_point).
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-14-1.png)
 
     #13
     ggplot(data = categories, aes(x = fct_reorder(Major_category, mean_female, .desc = TRUE), y = mean_female)) + geom_bar(stat = "identity", fill = "pink") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "% Female by Major Category", x = "Major Category", y = "% Female")
 
     ## Warning: Removed 1 rows containing missing values (position_stack).
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-14-2.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-14-2.png)
 
     #14
     ggplot(data = mostpopular, aes(x = fct_reorder(Major, ShareWomen, .desc = TRUE), y = ShareWomen)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "% Female by Major Category", x = "Major", y = "% Female")
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-14-3.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-14-3.png)
 
 Closer look at our majors
 =========================
@@ -438,22 +438,22 @@ Closer look at our majors
     #15 
     ggplot(data = ourmajors, aes(x = Major, y = full_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-15-1.png)
 
     #16
     ggplot(data = ourmajors, aes(x = Major, y = full_unemployment_rate, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-15-2.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-15-2.png)
 
     #17
     ggplot(data = ourmajors, aes(x = Major, y = ShareWomen, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-15-3.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-15-3.png)
 
     #18
     ggplot(data = ourmajors, aes(x = Major, y = full_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-15-4.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-15-4.png)
 
     #19
     nongrad <- ggplot(data = ourmajors, aes(x = Major, y = Nongrad_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1), axis.ticks.x=element_blank())
@@ -462,7 +462,7 @@ Closer look at our majors
 
     grid.arrange(grad, nongrad)
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-15-5.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-15-5.png)
 
 ### Plots
 
@@ -476,7 +476,7 @@ Closer look at our majors
 
     ## Warning: Removed 1 rows containing missing values (geom_point).
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
     outliers1 <- totalcombination1 %>%
       filter(ShareWomen <= 0 | ShareWomen >=    0.9679982)
@@ -488,7 +488,7 @@ Closer look at our majors
 
     ## Warning: Removed 1 rows containing missing values (position_stack).
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-17-1.png)
 
     outliers2 <- totalcombination1 %>%
       filter(recent_unemployment_rate >= .14 | recent_low_wage_jobs >= 25000)
@@ -498,4 +498,4 @@ Closer look at our majors
       ggrepel::geom_label_repel(aes(label=paste("(",Major,",",recent_low_wage_jobs,")"), vjust = 4, hjust = 0, colour = Major_category),
         data = outliers2, show.legend = FALSE)
 
-![](Index_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+![](index_files/figure-markdown_strict/unnamed-chunk-18-1.png)
