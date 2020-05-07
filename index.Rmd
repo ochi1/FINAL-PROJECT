@@ -1,0 +1,302 @@
+---
+title: "Project Stage II"
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+```
+
+## Recent Grads
+```{r}
+recentgrads <- read_csv("Data/recentgrads.csv")
+
+head(recentgrads)
+
+recentgrads$recent_total <- recentgrads$Total
+recentgrads$Total <- NULL
+
+recentgrads$recent_men <- recentgrads$Men
+recentgrads$Men <- NULL
+
+recentgrads$recent_women <- recentgrads$Women
+recentgrads$Women <- NULL
+
+#recentgrads$recent_ShareWomen <- recentgrads$ShareWomen
+#recentgrads$ShareWomen <- NULL
+
+recentgrads$recent_sample_size <- recentgrads$Sample_size
+recentgrads$Sample_size <- NULL
+
+recentgrads$recent_employed <- recentgrads$Employed
+recentgrads$Employed <- NULL
+
+recentgrads$recent_full_time <- recentgrads$Full_time
+recentgrads$Full_time <- NULL
+
+recentgrads$recent_part_time <- recentgrads$Part_time
+recentgrads$Part_time <- NULL
+
+recentgrads$recent_full_time_year_round <- recentgrads$Full_time_year_round
+recentgrads$Full_time_year_round <- NULL
+
+recentgrads$recent_unemployed <- recentgrads$Unemployed
+recentgrads$Unemployed <- NULL
+
+recentgrads$recent_unemployment_rate <- recentgrads$Unemployment_rate
+recentgrads$Unemployment_rate <- NULL
+
+recentgrads$recent_median <- recentgrads$Median
+recentgrads$Median <- NULL
+
+recentgrads$recent_p25th <- recentgrads$P25th
+recentgrads$P25th <- NULL
+
+recentgrads$recent_p75th <- recentgrads$P75th
+recentgrads$P75th <- NULL
+
+recentgrads$recent_college_jobs <- recentgrads$College_jobs
+recentgrads$College_jobs <- NULL
+
+recentgrads$recent_non_college_jobs <- recentgrads$Non_college_jobs
+recentgrads$Non_college_jobs <- NULL
+
+recentgrads$recent_low_wage_jobs <- recentgrads$Low_wage_jobs
+recentgrads$Low_wage_jobs <- NULL
+
+head(recentgrads)
+```
+
+
+## All Grads
+```{r}
+allgrads <- read_csv("Data/allgrads.csv")
+
+
+
+
+head(allgrads)
+
+allgrads$all_total <- allgrads$Total
+allgrads$Total <- NULL
+
+allgrads$all_employed <- allgrads$Employed
+allgrads$Employed <- NULL
+
+allgrads$all_employed_full_time_year_round <- allgrads$Employed_full_time_year_round
+allgrads$Employed_full_time_year_round <- NULL
+
+allgrads$all_unemployed <- allgrads$Unemployed
+allgrads$Unemployed <- NULL
+
+allgrads$all_unemployment_rate <- allgrads$Unemployment_rate
+allgrads$Unemployment_rate <- NULL
+
+allgrads$all_median <- allgrads$Median
+allgrads$Median <- NULL
+
+allgrads$all_p25th <- allgrads$P25th
+allgrads$P25th <- NULL
+
+allgrads$all_p75th <- allgrads$P75th
+allgrads$P75th <- NULL
+```
+
+
+## Grad students
+```{r}
+gradstudents <- read_csv("Data/gradstudents.csv")
+
+allgrads <- read_csv("Data/allgrads.csv")
+
+
+head(gradstudents)
+```
+
+```{r}
+combinedrecentandgrad <- full_join(recentgrads, gradstudents, by = c("Major_code", "Major", "Major_category"))
+
+totalcombination <- full_join(combinedrecentandgrad, allgrads, by = c("Major_code", "Major", "Major_category"))
+
+totalcombination1 <- totalcombination %>% mutate(full_total = all_total + recent_total + Grad_total, full_employed = all_employed + recent_employed + Grad_total, total_unemployed = all_unemployed + recent_unemployed + Grad_unemployed)
+
+totalcombination2 <- totalcombination1 %>% mutate(full_median = (recent_median + Grad_median + Nongrad_median + all_median)/4)
+
+totalcombinationpaid <- totalcombination2 %>% arrange(desc(all_median))
+
+write.csv(totalcombinationpaid, file = "totalcombinationpaid.csv")
+
+
+topten <- filter(totalcombination2, all_median > 80000)
+```
+
+```{r}
+ggplot(data = topten, aes(x = Major, y = all_median)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+# PLOTTING ----------------
+
+### Major Categories
+
+```{r}
+table(totalcombination2$Major_category)
+
+totalcombination3 <- totalcombination2 %>% mutate(full_unemployment_rate = (recent_unemployment_rate + Grad_unemployment_rate + Nongrad_unemployment_rate + all_unemployment_rate)/4)
+
+categories <- totalcombination3 %>% group_by(Major_category) %>% summarise(Count = n(), mean_income = mean(full_median), Total = sum(full_total), mean_unemployment = mean(full_unemployment_rate), mean_female = mean(ShareWomen)) %>% arrange(desc(Count))
+
+#1
+ggplot(data = categories, aes(x = fct_reorder(Major_category, Count, .desc = TRUE), y = Count)) + geom_bar(stat = "identity", fill = "blue") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Major Categories", x = "Major Category")
+
+#2
+ggplot(data = categories, aes(x = fct_reorder(Major_category, Total, .desc = TRUE), y = Total)) + geom_bar(stat = "identity", fill = "blue") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Total Cases", y = "Cases", x = "Major Category")
+```
+# 1. In our dataset, each unique major is classified as one of these 16 categories. Engineering is the most diverse category followed by; Education, Liberal Arts, Life Science, and Business.
+
+
+### Major
+```{r}
+mostpopular <- totalcombination3 %>% arrange(desc(full_total)) %>% slice(1:25)
+
+mostpopularcount <- mostpopular %>% group_by(Major_category) %>% summarise(Count = n()) %>% arrange(desc(Count))
+
+#3
+ggplot(data = mostpopular, aes(x = fct_reorder(Major, full_total, .desc = TRUE), y = full_total)) + geom_bar(stat = "identity", fill = "green") + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + labs(title = "Popular Majors", x = "Majors", y = "Count")
+
+#4
+ggplot(data = mostpopularcount, aes(x = fct_reorder(Major_category, Count, .desc = TRUE), y = Count)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Popular Major Categories", x = "Major Category")
+```
+#These are the 25 most popular majors in our dataset. Business Management and Administration is the most popular with Business being the most popular category amongst the top 25 majors.
+
+```{r}
+#5
+ggplot(data = totalcombination2, aes(x = fct_reorder(Major, full_median, .desc = TRUE), y = full_median, color = Major_category)) + geom_point() + labs(main = "Median Income by Major", y = "Median Income", x = "Majors", color = "Major Category") + theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+```
+# 4 This is the median income for all 173 majors we have in our data set. As you can see, the majors in the categories of Education, Engineering, and Health are the highest earners.
+
+```{r}
+#6
+ggplot(data = categories, aes(x = fct_reorder(Major_category, mean_income, .desc = TRUE), y = mean_income)) + geom_bar(stat = "identity", fill = "blue") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Income per Major", x = "Major", y = "Median Income")
+```
+# These are the average median income for each major category in our dataset. As you can see engineering is paid the best. 
+
+
+
+
+```{r}
+#7
+ggplot(data = mostpopular, aes(x = fct_reorder(Major, full_median, .desc = TRUE), y = full_median)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Income per Major", x = "Major", y = "Median Income")
+
+#8
+ggplot(data = mostpopular, aes(x = fct_reorder(Major_category, full_median, .desc = TRUE), y = full_median)) + geom_boxplot(fill = "yellow") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Income for Popular Major Categories", x = "Major Category", y = "Median Income")
+```
+# 5 majors we want to investigate
+- General Engineering 
+- Economics
+- Political Science and Government 
+- Mathematics
+- Biology
+```{r}
+ourmajors <- totalcombination3 %>% filter(Major %in% c("GENERAL ENGINEERING", "ECONOMICS", "POLITICAL SCIENCE AND GOVERNMENT", "MATHEMATICS", "BIOLOGY"))
+```
+
+
+#Unemployment
+```{r}
+
+
+#9
+ggplot(data = totalcombination3, aes(x = fct_reorder(Major, full_unemployment_rate, .desc = TRUE), y = full_unemployment_rate, color = Major_category)) + geom_point() + labs(main = "Unemployment Rate by Major", y = "Unemployment Rate", x = "Majors", color = "Major Category") + theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+#10
+ggplot(data = categories, aes(x = fct_reorder(Major_category, mean_unemployment, .desc = TRUE), y = mean_unemployment)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Unemployment by Major Category", x = "Major Category", y = "Unemployment Rate")
+
+#11
+ggplot(data = mostpopular, aes(x = fct_reorder(Major, full_unemployment_rate, .desc = TRUE), y = full_unemployment_rate)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "Unemployment by Major Category", x = "Major Category", y = "Unemployment Rate")
+```
+
+# Women
+```{r}
+#12
+ggplot(data = totalcombination3, aes(x = fct_reorder(Major, ShareWomen, .desc = TRUE), y = ShareWomen, color = Major_category)) + geom_point() + labs(main = "% Female", y = "% Female", x = "Majors", color = "Major Category") + theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+#13
+ggplot(data = categories, aes(x = fct_reorder(Major_category, mean_female, .desc = TRUE), y = mean_female)) + geom_bar(stat = "identity", fill = "pink") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "% Female by Major Category", x = "Major Category", y = "% Female")
+
+#14
+ggplot(data = mostpopular, aes(x = fct_reorder(Major, ShareWomen, .desc = TRUE), y = ShareWomen)) + geom_bar(stat = "identity", fill = "red") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + labs(title = "% Female by Major Category", x = "Major", y = "% Female")
+```
+
+# Closer look at our majors 
+```{r}
+#15 
+ggplot(data = ourmajors, aes(x = Major, y = full_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+#16
+ggplot(data = ourmajors, aes(x = Major, y = full_unemployment_rate, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+#17
+ggplot(data = ourmajors, aes(x = Major, y = ShareWomen, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+#18
+ggplot(data = ourmajors, aes(x = Major, y = full_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+#19
+nongrad <- ggplot(data = ourmajors, aes(x = Major, y = Nongrad_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1), axis.ticks.x=element_blank())
+
+grad <- ggplot(data = ourmajors, aes(x = Major, y = Grad_median, fill = Major_code)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1), axis.ticks.x=element_blank())
+
+grid.arrange(grad, nongrad)
+```
+
+
+
+
+
+
+
+
+
+
+### Plots
+```{r}
+outliers <- totalcombination3 %>%
+  filter(full_total >= 310000 | full_median >= 65000)
+
+ggplot(totalcombination3, aes(Major, full_total)) +
+  geom_point() + 
+  ggrepel::geom_label_repel(aes(label=paste("(",Major,",",full_median,")"), vjust = 4, hjust = 0, colour = Major_category),
+    data = outliers, show.legend = FALSE)
+```
+
+
+```{r}
+outliers1 <- totalcombination1 %>%
+  filter(ShareWomen <= 0 | ShareWomen >= 	0.9679982)
+
+ggplot(totalcombination1, aes(Major, full_total, fill = recent_men)) +
+  geom_col() +
+  ggrepel::geom_label_repel(aes(label=paste("(",Major,",",recent_men," "," ",recent_low_wage_jobs,")"), vjust = 100, colour = Major_category),
+    data = outliers1, show.legend = FALSE)
+```
+
+```{r}
+outliers2 <- totalcombination1 %>%
+  filter(recent_unemployment_rate >= .14 | recent_low_wage_jobs >= 25000)
+
+ggplot(totalcombination1, aes(Major, recent_unemployment_rate)) +
+  geom_jitter() +
+  ggrepel::geom_label_repel(aes(label=paste("(",Major,",",recent_low_wage_jobs,")"), vjust = 4, hjust = 0, colour = Major_category),
+    data = outliers2, show.legend = FALSE)
+```
