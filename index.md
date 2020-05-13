@@ -13,12 +13,6 @@ prominent majors.
 Does Popularity Coincide with Earnings for an Area of Study?
 ===============================================================
 
-    ggplot(data = mostpopularcount, aes(x = fct_reorder(Major_category, Count, .desc = TRUE), y = Count, fill = Major_category)) + 
-      geom_bar(stat = "identity") + 
-      theme(axis.text.x = element_text(angle = 60, hjust = 1), legend.position = "none") + 
-      labs(title = "Popular Major Categories", x = "Major Category") +
-      scale_color_manual(values = c("Business" = "blue"))
-
 ![](CopyOfCalCopy_of_Index_-_Caleb_files/figure-markdown_strict/unnamed-chunk-9-1.png)
 
     # Out of the 25 most popular majors, Business has the most majors with 5, followed by Engineering, Liberal Arts, and Social Science. Overall, business and its' related majors are the most popular with the most cases.
