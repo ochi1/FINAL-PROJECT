@@ -51,10 +51,11 @@ Is a Graduate Degree Worth It?
 
 ![](CopyOfCalCopy_of_Index_-_Caleb_files/figure-markdown_strict/unnamed-chunk-22-1.png)
 
-    ## The "graduate premium" shows the ratio of graduate income to non-graduate income so as you can see, each major shows a substantial increase in income from a graduate degree. A graduate degree in biology shows to pay off the most as the median increases over 1.75 times! Despite the drastic increase, Econonimcs and Engineering pay more than Biology.
+The "graduate premium" shows the ratio of graduate income to non-graduate income so as you can see, each major shows a substantial increase in income from a graduate degree. A graduate degree in biology shows to pay off the most as the median increases over 1.75 times! Despite the drastic increase, Econonimcs and Engineering pay more than Biology.
 
-\#\#How Can You Apply This Information? Often the most popular majors
-appear to offer the highest earning potentials. However, this is often
+How Can You Apply This Information?
+=============================================================== 
+Often the most popular majors appear to offer the highest earning potentials. However, this is often
 untrue. Choose a major you are passionate about rather than one everyone
 else seems to be doing. Women tend to select majors that stress
 interpersonal skills. But don’t be shy to pursue a major that is often
