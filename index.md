@@ -9,7 +9,7 @@ project. We are soon to be college graduates so we will examine things
 like income and unemployment in our own majors and also in other
 prominent majors.
 
-\#Does Popularity Coincide with Earnings for an Area of Study?
+\##Does Popularity Coincide with Earnings for an Area of Study?
 
     ggplot(data = mostpopularcount, aes(x = fct_reorder(Major_category, Count, .desc = TRUE), y = Count, fill = Major_category)) + 
       geom_bar(stat = "identity") + 
