@@ -42,7 +42,7 @@ Is a Graduate Degree Worth It?
 
 ![](CopyOfCalCopy_of_Index_-_Caleb_files/figure-markdown_strict/unnamed-chunk-20-1.png)
 
-When looking at people that only have an undergraduate degree, the majors remain in the same order of median income, seen in the second plot, with lower incomes than graduates. 
+When looking at people that only have an undergraduate degree, the majors remain in the same order of median income with lower incomes than graduates. 
 
 ![](CopyOfCalCopy_of_Index_-_Caleb_files/figure-markdown_strict/unnamed-chunk-20-2.png)
 
